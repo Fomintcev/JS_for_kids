@@ -1,0 +1,98 @@
+<script type="text/javascript">
+	// Создание функций
+
+	//Возвращает случайно выбранное слово
+	function pickWord(){
+		var wordsArray = [
+		"программа",
+		"макака",
+		"прекрасный",
+		"оладушек"
+		];
+		word = wordsArray[Math.floor(Math.random()*wordsArray.length)];
+		return word;
+		console.log(word)
+	};
+	
+	//Возвращает итоговый массив для заданного слова
+	function setupAnswerArray(word){
+		var word_ = []
+		for (i=0;i<word.length;i++){
+			word_[i]= "_";
+		};
+		return word_;
+	}
+
+	//С помощью alert отображает текущее состояние игры
+	function showPlayerProgress(answerArray){
+		alert (answerArray.join(" "));
+			};
+
+	function getGuess() {
+		//Запрашивает ответ игрока с помощью prompt
+		var letter=prompt("Введите букву, или нажмите отмена для окончания игры")
+		return letter;
+	};
+
+	function letterRepeat(guess,answerArray){
+		var z=0;
+		for (i=0;i<word.length;i++){
+			if (guess===answerArray[i]){
+				z++
+			};
+		};
+		return z;
+	}
+
+
+	function updateGameState(guess,word,answerArray){
+		var n=0 //Букв угаданно за цикл
+		for (i=0;i<word.length;i++){
+			if (guess===word[i]){
+				answerArray[i]= guess;
+				n++;
+			} ;
+		}; return n;
+	};
+
+	function showAnswerAndCongratulatePlayer(answerArray) {
+		alert("Поздравляем! Слово : " + answerArray + " угадано!");
+	}
+
+	//word: загаданное слово
+	var word = pickWord();
+	//ansverArray: итоговый массив
+	var answerArray = setupAnswerArray(word);
+	//Сколько букв осталось угадать
+	var remainingLetters = word.length;
+	var lives = 9;
+	while (remainingLetters>0 && lives>0) {
+		showPlayerProgress(answerArray); //Показать прогресс игрока
+		// guess: ответ игрока
+		var guess = getGuess();
+		if (guess===null){
+			break;
+		} else if ((guess.length) !== 1){
+			alert ("Пожалуйста, введите одиночную букву.",guess)
+		} else if (letterRepeat(guess,answerArray)>0){
+			alert("Повтор буквы!")
+		} else	{
+			//correctGuesses: количество открытых букв
+			var correctGuesses = updateGameState (guess, word, answerArray);
+			if (correctGuesses===0){
+				lives--
+				alert("Ошибочка! Жизней осталось " + lives)
+			} else {
+			remainingLetters-=correctGuesses;
+			}
+		}
+		
+
+	}
+	if (lives!=0) {
+		showAnswerAndCongratulatePlayer(answerArray);
+	} else { alert("Игра окончена жизней больше нет :( ")}
+
+
+	 
+</script>

@@ -1,0 +1,64 @@
+<script type="text/javascript">
+	var words = [
+	"программа",
+	"макака",
+	"прекрасный",
+	"оладушек",
+	"печенье",
+	"тефтели",
+	"куркума",
+	"кучка",
+	"колокол"
+	];
+
+	var word = words[Math.floor(Math.random()*words.length)];
+
+	var answerArray = [];
+	for (var i=0; i<word.length; i++) {
+		answerArray[i] = "_";
+	}
+
+	var remainingLetters = word.length;
+	var live = 9;
+
+	while (remainingLetters>0 && live>0){
+		var r=0; //переменная для цикла проверки повторения буквы
+		var z=remainingLetters;
+		alert(answerArray.join(" "));
+		var guessR = prompt("Угадайте букву или нажмите Отмена для выхода из игры.")
+		
+
+		if (guessR == null) {
+			break;
+		} else if (guessR.length !== 1) {
+			alert("Пожалуйста, введите только одну букву!")
+		} else  {
+			var guessLow = guessR.toLowerCase();//меняем регистр, если заменить его до проверки null,ругается на этот метод
+
+			for (var j = 0; j<word.length; j++){
+
+				if (word[j]===guessLow){
+					
+					answerArray[j]=guessLow;
+					remainingLetters--;
+				
+				} 
+			} if (remainingLetters == z){
+				live--;
+				alert("Упс, ошибка, количество жизней: "+ live)
+			}
+		}
+
+	}
+	if (live==0){
+		alert("Вы проиграли :(")
+	} else {
+		alert("Отлично! Было загадано слово "+word)
+	}
+
+while (r<word.length){
+	if (answerArray[r]==guessR){
+
+	}
+}
+</script>

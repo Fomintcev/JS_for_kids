@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Мигаем заголовком</title>
+</head>
+<body>
+	<h1 id="heading">Этот заголовок мигает</h1>
+
+	<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+	<script>
+		x = 0
+		y = 0
+		i = 10
+		function movingOnSquare(){	
+
+			if (x <200 && y ==0){		
+			$("h1").offset({ left: x})
+		 	x ++
+		    } else if (x == 200 && y <200) {
+				$("h1").offset({ top: y})
+				y++
+			} else if (y == 200 && x > 0){
+			    $("h1").offset({ left: x })
+			    x--
+			} else if ( x == 0 && y > 0) {
+				$("h1").offset({ top: y })
+				y--
+			}	
+		} 
+
+		
+
+		intervalId = setInterval(movingOnSquare,100)
+
+		$("h1").click(faster)
+
+		function faster(click){
+			
+			clearInterval(intervalId)
+			intervalId = setInterval(movingOnSquare,i)
+			i--
+			if ( i== 0 ){
+				alert("вы победили!")
+				clearInterval(intervalId)
+			}
+			console.log (i)
+		}
+	</script>
+
+</body>
+</html>

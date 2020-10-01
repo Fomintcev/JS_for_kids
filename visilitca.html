@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	var words = [
+	"программа",
+	"макака",
+	"прекрасный",
+	"оладушек"
+	];
+	
+	var word = words[Math.floor(Math.random()*words.length)];
+	
+
+	var stringWord=[];
+	var i=0;
+	while (i<word.length){
+		stringWord.push(word[i]);
+		i++
+	}
+
+	var emptyWord = [];
+	var a=0;
+	while(a<word.length){
+		emptyWord.push("_");
+		a++
+	}
+	alert(word);
+
+	var z = a;
+	var letter ="";
+	while (z!==0) {
+		
+		letter = prompt("Введите букву " + emptyWord); //ввел букву
+	
+
+    for (var n =0; n <= a; n++) {
+  		if (letter===word[n]) {
+			emptyWord[n] = letter
+			z=z-1
+			alert(emptyWord)
+			console.log(z)
+	 	} else {
+		alert("Упс, не попал!")
+		console.log(z)	};
+	              };
+	              
+};
+ 
+</script>

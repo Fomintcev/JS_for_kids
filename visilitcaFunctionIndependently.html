@@ -1,0 +1,66 @@
+<script type="text/javascript">
+	var wordsArray = [
+	"пирожок",
+	"булочка",
+	"конфетка",
+	"яблоко",
+	"шоколадка"
+	]
+     
+	function wordFromArray(){
+		var word = wordsArray[Math.floor(Math.random()*wordsArray.length)]
+		return word
+	}
+    //Задаем массив _ _ _ равный длинне слова
+	function getAnswerArray(){
+		var answerArray = []
+		for (i = 0; i < word.length; i++){
+			answerArray[i] = "_"
+		}
+		return answerArray
+	}
+    //Проверяем букву
+	function letterCheck() {
+		if (letter.length!=1){
+			alert("Буква не одна!")			
+		} else if ( checkDouble() ) {
+		    alert("Буква введена повторно!")
+		  } else { 
+			return true		    
+        } 
+    }     
+	function checkDouble() {
+      for (i = 0; i < word.length; i++) {
+          if (letter === answerArray[i]){
+            return true
+           }
+	    }
+	}	
+
+	word = wordFromArray(wordsArray)
+    answerArray = getAnswerArray(word)
+    alert(answerArray+1)
+    live = 9
+    var lotOfNumber = word.length
+   	while (lotOfNumber>0){
+    	var letter = (prompt("Введите букву")).toLowerCase()
+    	if (letter == null){
+			break
+	    } else if (letterCheck()){
+	    	  z = 0
+		      for (i = 0; i < word.length; i++) {
+			      if (letter === word[i]) {
+				      answerArray[i] = letter
+				      z ++
+				    }
+			    }  
+	        } else {
+		          live--
+		          alert("Не угадал, жизней осталось: " + live)
+		        }
+	        alert(answerArray.join(" ") + "   " + word + lotOfNumber)
+	    }		
+     lotOfNumber-=z		 
+    
+    alert(answerArray+3)
+</script>

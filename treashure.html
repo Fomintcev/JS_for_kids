@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Найди клад!</title>
+</head>
+<body>
+	<h1 id="heading">Найди клад!</h1>
+
+	<img id="map" width=800 height=800 src="http://nostarch.com/images/treasuremap.png">
+	<p> Кликай по картинке и следи за подсказками ниже!
+	<p id="distance"> </p>
+	<p id = "clicks">Кликов осталось:</p>
+
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+	<script >
+		//Переменные
+		width = 800
+		height = 800
+		clicks=0
+
+		// рандомное число
+		function getRandomNumber(size){
+			return (Math.floor(Math.random()*size))
+		}
+
+		target = {
+			x: getRandomNumber(width),
+			y: getRandomNumber(height)
+ 		}//Получили координаты цели
+
+ 		
+
+ 		//Вычисление расстояния от клика до цели
+ 		function getDistance (event, target) {
+ 			diffX = event.offsetX - target.x
+ 			diffY = event.offsetY - target.y
+ 			return Math.sqrt((diffX*diffX)+(diffY*diffY))
+ 		}
+ 		//Подсказка согласно указания
+ 		function getHint(distance){
+ 			if (distance < 20) {
+ 				alert("Клад найден! сделано кликов :" + clicks)
+ 			} else if (distance < 40) {
+ 				return "Обожжешься!"
+ 			} else if (distance < 80 ) {
+ 				return "Очень горячо"
+ 			} else if (distance < 120) {
+ 				return "Горячо"
+ 			} else if (distance < 240) {
+ 				return "Тепло"
+ 			}else if (distance < 480) {
+ 				return "Холодно"
+ 			} else if (distance < 640) {
+ 				return "Очень холодно"
+ 			} else if (distance < 750){
+ 				return "Замерзнешь"
+ 			} else {
+ 				return "Окалел"
+ 			}
+ 		}//Обработчик клика 		
+ 		$("#map").click(function (event) {
+ 			clicks++ 
+ 		
+ 		   distance = getDistance(event,target);
+ 		   distanceHint = getHint(distance);
+ 		   $("#distance").text(distanceHint)
+ 		   $("#clicks").text("Кликов осталось:"+(20-clicks))
+ 		   if (clicks == 20){
+ 		   	alert("Ты проиграл!")
+ 		   }        
+        })
+ 	</script>
+</body>
+</html>
