@@ -3,28 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Гонки</title>
-</head>	
+</head>
 <body>
   <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
   <script>
-  	function Car (x,y) {
+//Создаем конструктор
+		function Car (x,y) {
   		this.x = x
   		this.y = y
   		this.speed = 0
   		this.draw()
   	}
-
+//Метод отрисовки обьекта
   	Car.prototype.draw = function() {
+			//картинка преобразованная в jQwery элемент
   		this.carElement = $('<img src="http://nostarch.com/images/car.png">')
-
+//задаем координаты для обьекта
   		this.carElement.css({
-  			position: "absolute",
+  			position: "absolute", //распространяется на все окно браузера
   			left: this.x,
   			top: this.y
   		})
   	$("body").append(this.carElement)
   	}
-
+//Методы движения , в методе движения вправо скорость задается автоматически
+//для создания "эпадрома" со случайным победителем
   	Car.prototype.moveRight = function() {
   		this.speed = (Math.floor((Math.random())*20))
   		this.x += this.speed
@@ -51,7 +54,7 @@
 
   		this.carElement.css({
   			left: this.x,
-  			top: this.y  		
+  			top: this.y
   		})
   	}
 
@@ -64,14 +67,14 @@
   			top: this.y
   		})
   	}
-
+		//Автоматическое создание двух обьектов
   	tesla = new Car(20,150)
   	nissan = new Car(20,200)
-  	
 
+//Вызов метода движения с интервалом в 0.1 сек.
    	setInterval("nissan.moveRight()",100)
    	setInterval("tesla.moveRight()",100)
 
   </script>
 </body>
-</html>	
+</html>
