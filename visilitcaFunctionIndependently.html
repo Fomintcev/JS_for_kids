@@ -1,4 +1,13 @@
-<script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Висилица</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="300" height="300"></canvas>
+
+	<script type="text/javascript">
 	var wordsArray = [
 	"пирожок",
 	"булочка",
@@ -6,7 +15,7 @@
 	"яблоко",
 	"шоколадка"
 	]
-     
+
 	function wordFromArray(){
 		var word = wordsArray[Math.floor(Math.random()*wordsArray.length)]
 		return word
@@ -22,20 +31,56 @@
     //Проверяем букву
 	function letterCheck() {
 		if (letter.length!=1){
-			alert("Буква не одна!")			
+			alert("Буква не одна!")
 		} else if ( checkDouble() ) {
 		    alert("Буква введена повторно!")
-		  } else { 
-			return true		    
-        } 
-    }     
+		  } else {
+			return true
+        }
+    }
+		//Проверка повторного ввода угаданной буквы
 	function checkDouble() {
       for (i = 0; i < word.length; i++) {
           if (letter === answerArray[i]){
             return true
            }
 	    }
-	}	
+	}
+	//Рисовалка виселицы
+	function mistake(live){
+		canvas = document.getElementById("canvas")
+		ctx = canvas.getContext("2d")
+		ctx.strokeStyle
+		ctx.lineWidth = 4
+		ctx.beginPath()
+		if (live == 8){
+			ctx.arc(50,50,20,0,Math.PI*2,true)//head
+		} else if (live == 7){
+				ctx.moveTo(50,70)//body
+				ctx.lineTo(50,150)
+		} else if (live == 6) {
+				ctx.moveTo(50,80)//right hand
+				ctx.lineTo(10,110)
+		} else if (live == 5){
+				ctx.moveTo(50,80)//left hand
+				ctx.lineTo(90,110)
+		} else if (live == 4){
+				ctx.moveTo(50,150)//right leg
+				ctx.lineTo(10,200)
+		} else if (live == 3){
+				ctx.moveTo(50,150)//left leg
+				ctx.lineTo(90,200)
+		} else if (live == 2){
+				ctx.moveTo(50,30)//visilitsa
+				ctx.lineTo(50,5)
+		} else if (live == 1){
+				ctx.lineTo(110,5)
+		} else {
+		ctx.lineTo(110,200)
+		alert("Вы проиграли! :(")
+		}
+		ctx.stroke()
+	}
 
 	word = wordFromArray(wordsArray)
     answerArray = getAnswerArray(word)
@@ -47,20 +92,23 @@
     	if (letter == null){
 			break
 	    } else if (letterCheck()){
-	    	  z = 0
+	    	  z = 0 // переменная для подсчета повторяющихся букв
 		      for (i = 0; i < word.length; i++) {
 			      if (letter === word[i]) {
 				      answerArray[i] = letter
 				      z ++
 				    }
-			    }  
+			    }
 	        } else {
 		          live--
-		          alert("Не угадал, жизней осталось: " + live)
+						  alert("Не угадал, жизней осталось: " + live)
+							mistake(live)
 		        }
 	        alert(answerArray.join(" ") + "   " + word + lotOfNumber)
-	    }		
-     lotOfNumber-=z		 
-    
+	    }
+     lotOfNumber-=z
+
     alert(answerArray+3)
 </script>
+</body>
+</html>
