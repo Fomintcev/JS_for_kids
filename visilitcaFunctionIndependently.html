@@ -2,12 +2,14 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<title>Висилица</title>
+		<title>Виселица</title>
 	</head>
 	<body>
 		<canvas id="canvas" width="300" height="300"></canvas>
 
-	<script type="text/javascript">
+
+<script type="text/javascript">
+
 	var wordsArray = [
 	"пирожок",
 	"булочка",
@@ -29,24 +31,24 @@
 		return answerArray
 	}
     //Проверяем букву
-	function letterCheck() {
-		if (letter.length!=1){
+	function letterCheck(letter) {
+		if (letter.length != 1){
 			alert("Буква не одна!")
-		} else if ( checkDouble() ) {
+		} else if ( checkDouble(letter) ) {
 		    alert("Буква введена повторно!")
 		  } else {
 			return true
         }
     }
-		//Проверка повторного ввода угаданной буквы
-	function checkDouble() {
+		//проверка введенной буквы на повтор
+	function checkDouble(letter) {
       for (i = 0; i < word.length; i++) {
           if (letter === answerArray[i]){
             return true
            }
 	    }
 	}
-	//Рисовалка виселицы
+//Рисование висилицы
 	function mistake(live){
 		canvas = document.getElementById("canvas")
 		ctx = canvas.getContext("2d")
@@ -74,9 +76,11 @@
 				ctx.moveTo(50,30)//visilitsa
 				ctx.lineTo(50,5)
 		} else if (live == 1){
-				ctx.lineTo(110,5)
+			ctx.moveTo(50,5)
+			ctx.lineTo(110,5)
 		} else {
-		ctx.lineTo(110,200)
+			ctx.moveTo(110,5)
+			ctx.lineTo(110,200)
 		alert("Вы проиграли! :(")
 		}
 		ctx.stroke()
@@ -84,31 +88,39 @@
 
 	word = wordFromArray(wordsArray)
     answerArray = getAnswerArray(word)
-    alert(answerArray+1)
+    alert("Привет, сыграем в виселицу?" + "\n" + "Я загадал слово: " +answerArray.join(" "))
     live = 9
     var lotOfNumber = word.length
-   	while (lotOfNumber>0){
+
+function game(){
+   	while (lotOfNumber>0 && live>0){
     	var letter = (prompt("Введите букву")).toLowerCase()
-    	if (letter == null){
+
+		if (letter == null){
 			break
-	    } else if (letterCheck()){
-	    	  z = 0 // переменная для подсчета повторяющихся букв
+		} else if (letterCheck(letter)){
+	    	  z = 0
 		      for (i = 0; i < word.length; i++) {
 			      if (letter === word[i]) {
 				      answerArray[i] = letter
 				      z ++
 				    }
 			    }
-	        } else {
+	       if (z == 0){
 		          live--
-						  alert("Не угадал, жизней осталось: " + live)
-							mistake(live)
-		        }
-	        alert(answerArray.join(" ") + "   " + word + lotOfNumber)
-	    }
-     lotOfNumber-=z
+		          mistake(live)
+							alert("Не угадал, жизней осталось: " + live + "\n" + answerArray.join(" "))
+							break
+						}
+			 }
+	        alert("Правильно!\n" + answerArray.join(" "))
 
-    alert(answerArray+3)
+
+     lotOfNumber-=z
+    	}
+	setTimeout(game,20)
+}
+game()
 </script>
 </body>
 </html>
