@@ -5,21 +5,60 @@
     <title>Анимация с canvas</title>
   </head>
   <body>
-    <canvas id="canvas" width="300" height="300"></canvas>
+    <canvas id="canvas" width="200" height="200"></canvas>
     <script>
     canvas = document.getElementById("canvas")
     ctx = canvas.getContext("2d")
 
-    size = 0
+    beeLocationX = Math.floor(Math.random()*200)
+//круги для рисования пчелы
+    function circle (x,y,radius,fillCircle) {
+        ctx.beginPath()
+        ctx.arc(x, y, radius, Math.PI*2, false)
+        if (fillCircle){
+          ctx.fill()
+        } else {
+          ctx.stroke()
+        }
+    }
+//Рисование пчелы
+function drawBee (x, y) {
+    ctx.lineWith = 2
+    ctx.strokeStyle = "black"
+    ctx.fillStyle = "Gold"
+
+    circle(x,y,8,true)
+    circle(x,y,8,false)
+    circle(x-5,y-11,5,false)
+    circle(x+5,y-11,5,false)
+    circle(x-2,y-1,2,false)
+    circle(x+2,y-1,2,false)
+    }
+//обновление пути пчелы
+function update(coordinate){
+  offset = Math.random() * 4 -2
+  coordinate += offset
+
+  if (coordinate>200){
+    coordinate = 200
+  }
+  if (coordinate<0) {
+    coordinate = 0
+  }
+  return coordinate
+}
+
+x= 100
+y = 100
 
  setInterval(function () {
+   ctx.clearRect(0,0,200,200)
 
-   ctx.fillRect(0,0,size,size)
-    size++
-    if (size > 200) {
-      size = 0
-      ctx.clearRect(0,0,220,200)
-    }
+   drawBee(x,y)
+   x = update(x)
+   y = update(y)
+
+   ctx.strokeRect(0,0,200,200)
  },30)
       </script>
   </body>
