@@ -13,20 +13,21 @@
       this.y = 100
       this.xSpeed = (Math.random() * 10 - 5)
       this.ySpeed = (Math.random() * 10 - 5)
+      this.color = colors[Math.floor(Math.random()*colors.length)]
    }
 
-    function circle(x,y,radius,fillCircle){
+    function circle(x,y,radius,fillCircle,color){
       ctx.beginPath()
       ctx.arc(x,y,radius,Math.PI*2,false)
       if (fillCircle){
         ctx.fill()
-        ctx.fillStyle = colors[Math.floor(Math.random()*colors.length)]
+        ctx.fillStyle = color
       } else{
         ctx.stroke()
       }
     }
     Ball.prototype.draw = function(){
-      circle(this.x,this.y,3,true)
+        circle(this.x,this.y,3,true,this.color)
         }
     Ball.prototype.move = function(){
       this.x += this.xSpeed
@@ -54,8 +55,8 @@
     height = canvas.height
 
     ballArray = []
-    colors = ["red","green","blue","gold","pink"]
-  //  color = colors[Math.floor(Math.random()*colors.length)]
+    colors = ["red","green","blue","gold","pink","yellow","purple","black"]
+    //color = colors[Math.floor(Math.random()*colors.length)]
 
     for (i=0; i<10; i++) {
        ballArray[i] = new Ball()
