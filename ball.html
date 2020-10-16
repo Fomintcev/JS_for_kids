@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Прыгающий мяч</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="200" height="200"> </canvas>
+    <script>
+
+    function Ball(){
+      this.x = 100
+      this.y = 100
+      this.xSpeed = (Math.random() * 10 - 5)
+      this.ySpeed = (Math.random() * 10 - 5)    }
+
+    function circle(x,y,radius,fillCircle){
+      ctx.beginPath()
+      ctx.arc(x,y,radius,Math.PI*2,false)
+      if (fillCircle){
+        ctx.fill()
+      } else{
+        ctx.stroke()
+      }
+    }
+    Ball.prototype.draw = function(){
+      circle(this.x,this.y,3,true)
+    }
+    Ball.prototype.move = function(){
+      this.x += this.xSpeed
+      this.y += this.ySpeed
+    }
+    Ball.prototype.checkCollision = function(){
+      if (this.x < 3 || this.x > width){
+        this.xSpeed = -this.xSpeed
+        //добавим условие для попадания шара в угол
+        if  (this.y <= 3 || this.y >= height){
+          this.ySpeed = -this.ySpeed
+        }
+      } else if (this.y <= 3 || this.y >= height){
+        this.ySpeed = -this.ySpeed
+        //так-же условие для шара попавшего в угол
+        if (this.x < 3 || this.x > width){
+          this.xSpeed = -this.xSpeed
+        }
+      }
+    }
+    newBall = new Ball()
+
+    canvas = document.getElementById("canvas")
+    ctx = canvas.getContext("2d")
+    width = canvas.width //переменные для изменения размеров поля
+    height = canvas.height
+    setInterval(function(){
+      ctx.clearRect(0,0,width,height)
+
+      newBall.draw()
+      newBall.move()
+      newBall.checkCollision()
+
+      ctx.strokeRect(0,0,width,height)
+    },30)
+
+    </script>
+  </body>
+</html>
