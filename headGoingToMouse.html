@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Заголовок догоняет мышку</title>
+  </head>
+  <body>
+    <h1 id="heading">Прилипала</h1>
+
+  </body>
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+  $("html").mousemove( function (event) {
+    $("#heading").css({
+      position: "absolute"
+      left: event.x,
+      top: event.y
+    })
+  })
+  </script>
+</html>

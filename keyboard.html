@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Keyboard input</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="400"> </canvas>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+//Получение холста с контекстом рисования
+    canvas = document.getElementById("canvas")
+    ctx = canvas.getContext("2d")
+    width = canvas.width
+    height = canvas.height
+//Функция отрисовки шарика на холсте
+    function circle(x,y,radius,fillCircle){
+      ctx.beginPath()
+      ctx.arc(x,y,radius,Math.PI*2,false)
+      if(fillCircle){
+        ctx.fill()
+      } else{
+        ctx.stroke()
+      }
+    }
+//Конструктор мяча
+    function Ball(){
+      this.x = width/2
+      this.y = height/2
+      speed=1
+      radius = 1
+      this.xSpeed = speed
+      this.ySpeed = speed
+      }
+//Прототип или метод движения мяча
+  Ball.prototype.move = function(){
+    this.x += this.xSpeed
+    this.y += this.ySpeed
+
+    if (this.x < 0 || this.x > width){
+      this.xSpeed = -this.xSpeed
+    }
+
+    if (this.y < 0 || this.y > height){
+      this.ySpeed = -this.ySpeed
+    }
+  }
+//???
+   Ball.prototype.draw = function(){
+     circle(this.x,this.y,radius,true)
+   }
+//Пртотип связывающий клавиши и направление движения
+  Ball.prototype.setDirection = function(){
+    if (direction === "up"){
+      this.xSpeed = 0
+      this.ySpeed = -speed
+    } else if (direction === "down"){
+      this.xSpeed = 0
+      this.ySpeed = speed
+    } else if (direction === "left"){
+      this.xSpeed = -speed
+      this.ySpeed = 0
+    } else if (direction === "right"){
+      this.xSpeed = speed
+      this.ySpeed = 0
+    } else if (direction === "stop"){
+      this.xSpeed = 0
+      this.ySpeed = 0
+    }
+  }
+    keyActions = {
+      32: "stop",
+      37: "left",
+      38: "up",
+      39: "right",
+      40: "down",
+    }
+
+    speeds = {
+      49: 1,
+      50: 2,
+      51: 3,
+      52: 4,
+      53: 5,
+      54: 6,
+      55: 7,
+      56: 8,
+      57: 9
+    }
+
+ball = new Ball()
+
+$("body").keydown(function(event){
+    direction = keyActions[event.keyCode]
+
+    if (event.keyCode == 88){
+          speed++
+    } else if (event.keyCode == 90){
+      speed--
+        if (speed < 0){
+          speed = 0
+        }
+    } else if (event.keyCode == 86){
+      radius++
+    } else if (event.keyCode == 67){
+      radius--
+        if (radius < 1){
+          radius = 1
+        }
+    }
+
+  ball.setDirection(direction,speed)
+  console.log(event.keyCode, " ", speed)
+
+})
+
+setInterval(function(){
+  ctx.clearRect(0,0,width,height)
+  ball.draw()
+  ball.move()
+  ctx.strokeRect(0,0,width,height)
+},30)
+
+
+    </script>
+  </body>
+</html>

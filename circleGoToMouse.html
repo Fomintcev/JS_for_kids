@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Следит за твоими движениями</title>
+  </head>
+  <body>
+    <canvas id="canvas" height="500" width="500"></canvas>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+    canvas = document.getElementById("canvas")
+    ctx = canvas.getContext("2d")
+    ctx.fillRect
+  //function circle(){
+      ctx.arc(10,10,3,Math.PI*2,false)
+      crcl = ctx.fill()
+  //  }
+     $("html").mousemove(function (event) {
+      $("#canvas").offset({
+        left: event.pageX,
+        top: event.pageY
+      })
+    })
+      </script>
+  </body>
+</html>
