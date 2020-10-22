@@ -7,22 +7,21 @@
 	<body>
 		<canvas id="canvas" width="300" height="300"></canvas>
 
-
-<script type="text/javascript">
-
+<script>
+//Набор загадываемых слов
 	var wordsArray = [
-	"пирожок",
-	"булочка",
-	"конфетка",
-	"яблоко",
-	"шоколадка"
+  	"пирожок",
+	  /*"булочка",
+	  "конфетка",
+	  "яблоко",
+	  "шоколадка"*/
 	]
-
+//Рандомный выбор загаданного слова
 	function wordFromArray(){
 		var word = wordsArray[Math.floor(Math.random()*wordsArray.length)]
 		return word
 	}
-    //Задаем массив _ _ _ равный длинне слова
+//Задаем массив _ _ _ равный длинне слова
 	function getAnswerArray(){
 		var answerArray = []
 		for (i = 0; i < word.length; i++){
@@ -30,7 +29,7 @@
 		}
 		return answerArray
 	}
-    //Проверяем букву
+//Проверяем букву
 	function letterCheck(letter) {
 		if (letter.length != 1){
 			alert("Буква не одна!")
@@ -50,8 +49,6 @@
 	}
 //Рисование висилицы
 	function mistake(live){
-		canvas = document.getElementById("canvas")
-		ctx = canvas.getContext("2d")
 		ctx.strokeStyle
 		ctx.lineWidth = 4
 		ctx.beginPath()
@@ -81,46 +78,79 @@
 		} else {
 			ctx.moveTo(110,5)
 			ctx.lineTo(110,200)
-		alert("Вы проиграли! :(")
+		  gameOver()
 		}
 		ctx.stroke()
 	}
-
-	word = wordFromArray(wordsArray)
-    answerArray = getAnswerArray(word)
-    alert("Привет, сыграем в виселицу?" + "\n" + "Я загадал слово: " +answerArray.join(" "))
-    live = 9
-    var lotOfNumber = word.length
-
-function game(){
-   	while (lotOfNumber>0 && live>0){
-    	var letter = (prompt("Введите букву")).toLowerCase()
-
-		if (letter == null){
-			break
-		} else if (letterCheck(letter)){
-	    	  z = 0
-		      for (i = 0; i < word.length; i++) {
-			      if (letter === word[i]) {
-				      answerArray[i] = letter
-				      z ++
-				    }
-			    }
-	       if (z == 0){
-		          live--
-		          mistake(live)
-							alert("Не угадал, жизней осталось: " + live + "\n" + answerArray.join(" "))
-							break
-						}
-			 }
-	        alert("Правильно!\n" + answerArray.join(" "))
-
-
-     lotOfNumber-=z
-    	}
-	setTimeout(game,20)
+//Рисуем слово на холсте
+function wordDraw(){
+	time = performance.now()
+	ctx.clearRect(0,220,300,300)
+	ctx.font = "30px Courier"
+	ctx.textBaseline = "top"
+	ctx.fillText(answerArray.join(" "),0,220)
+	console.log(performance.now()-time)
 }
-game()
+
+function gameOver(){
+	ctx.clearRect(0,0,width,220)
+	ctx.font = "30px Courier"
+	ctx.textBaseline = "middle"
+  ctx.textAlign = "center"
+	ctx.fillText("Конец игры!",150,110)
+	clearInterval(intervalId)
+}
+
+function congratulations(){
+	if (lotOfNumber === 0){
+	  ctx.clearRect(0,0,width,220)
+	  ctx.font = "30px Courier"
+	  ctx.textBaseline = "middle"
+    ctx.textAlign = "center"
+	  ctx.fillText("Победа!",150,110)
+	  clearInterval(intervalId)
+	}
+}
+function game(){
+	if (lotOfNumber>0 && live>0){
+	  letter = (prompt("Введите букву"))//.toLowerCase()
+	  if (letter == null){
+		  clearInterval(intervalId)
+  	} else if (letterCheck(letter)){
+			 z = 0
+				 for (i = 0; i < word.length; i++) {
+					 if (letter === word[i]) {
+						answerArray[i] = letter
+						z ++
+					 }
+				 } //проверяем букву в слове меняем z и answerArray
+
+		   	if (z == 0){
+				   	live--
+					   mistake(live)
+				 }
+					lotOfNumber-=z
+	  }
+  }
+}
+//Задаем необходимые для игры переменные
+	word = wordFromArray(wordsArray)
+  answerArray = getAnswerArray(word)
+  alert("Привет, сыграем в виселицу?" + "\n" + "Я загадал слово: " + answerArray.join(" "))
+  live = 9
+  lotOfNumber = word.length
+	canvas = document.getElementById("canvas")
+	ctx = canvas.getContext("2d")
+	width = canvas.width
+	height = canvas.height
+	wordDraw()
+
+intervalId = setInterval(function(){
+	game()
+	wordDraw()
+	congratulations()
+},100)
+
 </script>
 </body>
 </html>
