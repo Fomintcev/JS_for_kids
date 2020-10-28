@@ -89,7 +89,6 @@ function wordDraw(){
 	ctx.font = "30px Courier"
 	ctx.textBaseline = "top"
 	ctx.fillText(answerArray.join(" "),0,220)
-	console.log(performance.now()-time)
 }
 
 function gameOver(){
@@ -146,8 +145,8 @@ function game(){
 	wordDraw()
 
 intervalId = setInterval(function(){
-	game()
-	wordDraw()
+	game(),
+	wordDraw(),
 	congratulations()
 },100)
 
